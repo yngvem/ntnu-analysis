@@ -18,13 +18,21 @@ module load singularity
 
 ## Code
 # If data files aren't copied, do so
-if [ ! -d $TMPDIR/ntnu_delin ]; then
+#!/bin/bash 
+if [ $# -lt 3 ]; 
+    then 
+    printf "Not enough arguments - %d\n" $# 
+    exit 0 
+    fi 
+
+if [ ! -d $TMPDIR/ntnu_delin ]
+    then
     mkdir $TMPDIR/ntnu_delin
     cp -r $HOME/datasets/ntnu $TMPDIR/ntnu_delin/
-fi
+    fi
 
 # Hack to ensure that the GPUs work
 nvidia-modprobe -u -c=0
 
 # Run experiment
-singularity exec --nv deoxys.sif python unet.py $1 $2 --epochs $3
+singularity exec --nv deoxys.sif python experiment.py $1 $HOME/logs/ntnu/$2 --epochs $3
