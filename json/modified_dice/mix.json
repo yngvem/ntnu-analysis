@@ -2,7 +2,7 @@
     "dataset_params": {
         "class_name": "HDF5Reader",
         "config": {
-            "filename": "/work/users/ntnu_delin/dwi.h5",
+            "filename": "/work/users/ntnu_delin/mix_downsample8.h5",
             "batch_size": 16,
             "x_name": "input",
             "y_name": "target_union",
@@ -24,18 +24,19 @@
         }
     },
     "train_params": {
-        "epochs": 500
+        "epochs": 200
     },
     "input_params": {
         "shape": [
-            128,
-            128,
-            7
+            64,
+            64,
+            8
         ]
     },
     "model_params": {
         "loss": {
-            "class_name": "BinaryFbetaLoss"
+                "class_name": "BinaryFbetaLossNoSquare"
+            }
         },
         "optimizer": {
             "class_name": "adam",
@@ -366,6 +367,7 @@
                 }
             },
             {
+                "name": "output_1",
                 "class_name": "Conv2D",
                 "config": {
                     "filters": 1,

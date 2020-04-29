@@ -1,0 +1,380 @@
+{
+    "dataset_params": {
+        "class_name": "HDF5Reader",
+        "config": {
+            "filename": "/work/users/ntnu_delin/dwi_downsample.h5",
+            "batch_size": 16,
+            "x_name": "input",
+            "y_name": "target_union",
+            "batch_cache": 4,
+            "train_folds": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "val_folds": [
+                5
+            ],
+            "test_folds": [
+                6,
+                7
+            ]
+        }
+    },
+    "train_params": {
+        "epochs": 500
+    },
+    "input_params": {
+        "shape": [
+            64,
+            64,
+            7
+        ]
+    },
+    "model_params": {
+        "loss": {
+            "class_name": "BinaryFbetaLoss"
+        },
+        "optimizer": {
+            "class_name": "adam",
+            "config": {
+                "learning_rate": 0.0001
+            }
+        },
+        "metrics": [
+            {
+                "class_name": "BinaryFbeta"
+            },
+            {
+                "class_name": "Fbeta"
+            }
+        ]
+    },
+    "architecture": {
+        "type": "Unet",
+        "layers": [
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 64,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "name": "conv2",
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 64,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "class_name": "MaxPooling2D"
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 128,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "name": "conv4",
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 128,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "class_name": "MaxPooling2D"
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 256,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "name": "conv6",
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 256,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "class_name": "MaxPooling2D"
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 512,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "name": "conv8",
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 512,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "class_name": "MaxPooling2D"
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 1024,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 1024,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "name": "conv_T_1",
+                "class_name": "Conv2DTranspose",
+                "config": {
+                    "filters": 512,
+                    "kernel_size": 3,
+                    "strides": 1,
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                }
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 512,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                },
+                "inputs": [
+                    "conv8",
+                    "conv_T_1"
+                ]
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 512,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "name": "conv_T_2",
+                "class_name": "Conv2DTranspose",
+                "config": {
+                    "filters": 256,
+                    "kernel_size": 3,
+                    "strides": 1,
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                }
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 256,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                },
+                "inputs": [
+                    "conv6",
+                    "conv_T_2"
+                ]
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 256,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "name": "conv_T_3",
+                "class_name": "Conv2DTranspose",
+                "config": {
+                    "filters": 128,
+                    "kernel_size": 3,
+                    "strides": 1,
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                }
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 128,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                },
+                "inputs": [
+                    "conv4",
+                    "conv_T_3"
+                ]
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 128,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "name": "conv_T_4",
+                "class_name": "Conv2DTranspose",
+                "config": {
+                    "filters": 64,
+                    "kernel_size": 3,
+                    "strides": 1,
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                }
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 64,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                },
+                "inputs": [
+                    "conv2",
+                    "conv_T_4"
+                ]
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 64,
+                    "kernel_size": 3,
+                    "activation": "relu",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                },
+                "normalizer": {
+                    "class_name": "BatchNormalization"
+                }
+            },
+            {
+                "class_name": "Conv2D",
+                "config": {
+                    "filters": 1,
+                    "kernel_size": 1,
+                    "activation": "sigmoid",
+                    "kernel_initializer": "he_normal",
+                    "padding": "same"
+                }
+            }
+        ]
+    }
+}
