@@ -3,7 +3,8 @@ import random
 from collections import defaultdict
 from functools import partial
 from pathlib import Path
-from typing import Callable, Dict, Generator, Iterable, List, Set, Tuple, Union
+from typing import (Callable, DefaultDict, Dict, Generator, Iterable, List,
+                    Set, Tuple, Union)
 
 import h5py
 import nibabel as nib
@@ -341,8 +342,8 @@ if __name__ == "__main__":
 
     generate_hdf5_file(
         folds,
-        out_name="t2w_compress_downsample8.h5",
+        out_name="dwi_compress_downsample.h5",
         data_path=data_path,
-        load_f=partial(load_t2w, downsample=8),
+        load_f=partial(load_dwi, downsample=8),
         overwrite=True,
     )
