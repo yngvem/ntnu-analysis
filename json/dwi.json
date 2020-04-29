@@ -2,7 +2,7 @@
     "dataset_params": {
         "class_name": "HDF5Reader",
         "config": {
-            "filename": "../../datasets/ntnu/dwi.h5",
+            "filename": "/work/users/ntnu_delin/dwi.h5",
             "batch_size": 16,
             "x_name": "input",
             "y_name": "target_union",

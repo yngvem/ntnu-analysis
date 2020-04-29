@@ -17,15 +17,14 @@
 module load singularity
 
 ## Code
-# Move dataset
-mkdir $TMPDIR/ntnu_delin
-cp $HOME/datasets/ntnu/mix_compress_downsample.h5 $TMPDIR/ntnu_delin/
+# If data files aren't copied, do so
+if [ ! -d $TMPDIR/ntnu_delin ]; then
+    mkdir $TMPDIR/ntnu_delin
+    cp -r $HOME/datasets/ntnu $TMPDIR/ntnu_delin/
+fi
 
 # Hack to ensure that the GPUs work
 nvidia-modprobe -u -c=0
 
 # Run experiment
 singularity exec --nv deoxys.sif python unet.py $1 $2 --epochs $3
-
-# Cleanup
-rm $TMPDIR/ntnu_delin/mix_compress_downsample.h5
