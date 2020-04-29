@@ -29,7 +29,7 @@ if [ ! -d $TMPDIR/ntnu_delin ]
     then
     echo "Didn't find dataset folder. Copying files..."
     mkdir $TMPDIR/ntnu_delin
-    cp -r $HOME/datasets/ntnu $TMPDIR/ntnu_delin/
+    cp -r $HOME/datasets/ntnu/* $TMPDIR/ntnu_delin/
     echo "Finished copying files."
     fi
 

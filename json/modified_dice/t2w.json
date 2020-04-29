@@ -30,13 +30,12 @@
         "shape": [
             64,
             64,
-            8
+            1
         ]
     },
     "model_params": {
         "loss": {
-                "class_name": "BinaryFbetaLossNoSquare"
-            }
+            "class_name": "BinaryFbetaLossNoSquare"
         },
         "optimizer": {
             "class_name": "adam",

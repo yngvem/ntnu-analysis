@@ -35,8 +35,7 @@
     },
     "model_params": {
         "loss": {
-                "class_name": "BinaryFbetaLoss"
-            }
+            "class_name": "BinaryFbetaLoss"
         },
         "optimizer": {
             "class_name": "adam",
