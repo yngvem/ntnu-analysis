@@ -25,13 +25,25 @@ if [ $# -lt 3 ];
     exit 0 
     fi 
 
-if [ ! -d $TMPDIR/ntnu_delin ]
+if [ ! -d "$TMPDIR/ntnu_delin" ]
     then
     echo "Didn't find dataset folder. Copying files..."
     mkdir $TMPDIR/ntnu_delin
-    cp -r $HOME/datasets/ntnu/* $TMPDIR/ntnu_delin/
-    echo "Finished copying files."
     fi
+
+for f in $(ls $HOME/datasets/ntnu/*)
+    do
+    FILENAME=`echo $f | awk -F/ '{print $NF}'`
+    echo $FILENAME
+    if [ ! -f "$TMPDIR/ntnu_delin/$FILENAME" ]
+        then
+        echo "copying $f"
+        cp -r $HOME/datasets/ntnu/$FILENAME $TMPDIR/ntnu_delin/
+        fi
+    done
+
+
+echo "Finished seting up files."
 
 # Hack to ensure that the GPUs work
 nvidia-modprobe -u -c=0
