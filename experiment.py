@@ -85,9 +85,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("config_file")
     parser.add_argument("log_folder")
-    parser.add_argument("--epochs", default=200, type=int)
-    parser.add_argument("--model_checkpoint_period", default=10, type=int)
-    parser.add_argument("--prediction_checkpoint_period", default=10, type=int)
+    parser.add_argument("--epochs", default=500, type=int)
+    parser.add_argument("--model_checkpoint_period", default=25, type=int)
+    parser.add_argument("--prediction_checkpoint_period", default=25, type=int)
     parser.add_argument("--comet_keyfile", default="comet_key.txt", type=str)
     args = parser.parse_args()
 
